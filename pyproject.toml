@@ -1,0 +1,10 @@
+[project]
+name = "adventofcode2025"
+version = "0.1.0"
+description = "AoC solutions for 2025 edition"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
