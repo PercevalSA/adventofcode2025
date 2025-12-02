@@ -4,14 +4,18 @@ start_position: int = 50
 # after any rotation in the sequence.
 
 
-def move_to_next_position(current_position: int, rotation: str) -> int:
+def clicks_from_rotation(rotation: str) -> int:
     direction = rotation[:1]
     click_number = int(rotation[1:])
     if direction == "L":
         click_number = -click_number
 
-    current_position = (current_position + click_number) % 100
+    return click_number
 
+
+def move_to_next_position(current_position: int, rotation: str) -> int:
+    click_number = clicks_from_rotation(rotation)
+    current_position = (current_position + click_number) % 100
     return current_position
 
 
@@ -29,10 +33,23 @@ def part1(data: str) -> int:
     return result
 
 
+def count_zero_clicks(dial_position: int, rotation: str) -> int:
+    rot: int = clicks_from_rotation(rotation)
+    all_clicks: list[int] = list(range(dial_position, dial_position + rot))
+    number_of_zeros: int = all_clicks.count(0)
+    return number_of_zeros
+
+
 def part2(data: str) -> int:
-    lines = data.strip().split("\n")
-    result = lines
-    return len(result)
+    rotations = data.strip().split("\n")
+    dial_position = start_position
+    result = 0
+
+    for rotation in rotations:
+        dial_position = move_to_next_position(dial_position, rotation)
+        result += count_zero_clicks(dial_position, rotation)
+
+    return result
 
 
 if __name__ == "__main__":
