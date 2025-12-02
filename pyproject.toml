@@ -7,4 +7,9 @@ requires-python = ">=3.13"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest"]
+	dev = ["pytest", "pytest-cov"]
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+python_files = "test_*.py"
+addopts = "-v"

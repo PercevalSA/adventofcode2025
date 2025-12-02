@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "pytest: Run all tests",
+            "type": "shell",
+            "command": "pytest",
+            "args": ["-v"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$python"
+            ]
+        },
+        {
+            "label": "pytest: Run tests with coverage",
+            "type": "shell",
+            "command": "pytest",
+            "args": ["--cov=.", "--cov-report=term-missing", "-v"],
+            "group": "test",
+            "problemMatcher": ["$python"]
+        },
+        {
+            "label": "pytest: Run current day tests",
+            "type": "shell",
+            "command": "pytest",
+            "args": ["${fileDirname}/", "-v"],
+            "group": "test",
+            "problemMatcher": ["$python"],
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "pytest: Run tests in watch mode",
+            "type": "shell",
+            "command": "pytest",
+            "args": ["-v", "--tb=short", "-x", "--lf"],
+            "group": "test",
+            "problemMatcher": ["$python"],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}
