@@ -30,8 +30,9 @@ def test_move_to_next_position():
 def test_count_zero_clicks():
     assert count_zero_clicks(50, "L60") == 1
     assert count_zero_clicks(10, "L20") == 1
-    assert count_zero_clicks(5, "R10") == 0
     assert count_zero_clicks(95, "R10") == 1
+    assert count_zero_clicks(5, "R10") == 0
+    assert count_zero_clicks(30, "R40") == 0
     assert count_zero_clicks(50, "R1000") == 10
 
 
