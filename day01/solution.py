@@ -1,9 +1,12 @@
+import logging
 from typing import Final
 
-start_position: Final[int] = 50
+logger = logging.getLogger(__name__)
 
 # The actual password is the number of times the dial is left pointing at 0
 # after any rotation in the sequence.
+
+start_position: Final[int] = 50
 
 
 def clicks_from_rotation(rotation: str) -> int:
@@ -43,9 +46,9 @@ def count_zero_clicks(dial_position: int, rotation: str) -> int:
         (dial_position + i) % 100 for i in range(direction, rot + direction, direction)
     ]
 
-    print(f"{dial_position};{rotation}: {all_clicks}")
+    logger.debug(f"{dial_position};{rotation}: {all_clicks}")
     number_of_zeros: int = all_clicks.count(0)
-    print(f"zeros: {number_of_zeros}")
+    logger.debug(f"zeros: {number_of_zeros}")
     return number_of_zeros
 
 
@@ -57,7 +60,7 @@ def part2(data: str) -> int:
     for rotation in rotations:
         result += count_zero_clicks(dial_position, rotation)
         dial_position = move_to_next_position(dial_position, rotation)
-        print(f"dial position: {dial_position}; result: {result}")
+        logger.debug(f"dial position: {dial_position}; result: {result}")
 
     return result
 
@@ -65,5 +68,5 @@ def part2(data: str) -> int:
 if __name__ == "__main__":
     with open("input.txt") as f:
         data = f.read()
-    print(f"Part 1: {part1(data)}")
-    print(f"Part 2: {part2(data)}")
+    logger.info(f"Part 1: {part1(data)}")
+    logger.info(f"Part 2: {part2(data)}")
