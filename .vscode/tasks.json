@@ -2,6 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Solve all puzzles",
+            "type": "shell",
+            "command": "uv",
+            "args": ["run", "main.py"],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$python"
+            ]
+        },
+        {
             "label": "pytest: Run all tests",
             "type": "shell",
             "command": "uv",
@@ -21,17 +34,6 @@
             "args": ["run", "pytest", "--cov=.", "--cov-report=term-missing", "-v"],
             "group": "test",
             "problemMatcher": ["$python"]
-        },
-        {
-            "label": "pytest: Run current day tests",
-            "type": "shell",
-            "command": "uv",
-            "args": ["run", "pytest", "${fileDirname}/", "-v"],
-            "group": "test",
-            "problemMatcher": ["$python"],
-            "presentation": {
-                "reveal": "always"
-            }
         },
         {
             "label": "pytest: Run tests in watch mode",
