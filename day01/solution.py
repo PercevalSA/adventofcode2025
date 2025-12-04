@@ -1,4 +1,6 @@
-start_position: int = 50
+from typing import Final
+
+start_position: Final[int] = 50
 
 # The actual password is the number of times the dial is left pointing at 0
 # after any rotation in the sequence.
@@ -53,8 +55,9 @@ def part2(data: str) -> int:
     result = 0
 
     for rotation in rotations:
-        dial_position = move_to_next_position(dial_position, rotation)
         result += count_zero_clicks(dial_position, rotation)
+        dial_position = move_to_next_position(dial_position, rotation)
+        print(f"dial position: {dial_position}; result: {result}")
 
     return result
 
