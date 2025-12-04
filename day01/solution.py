@@ -35,12 +35,15 @@ def part1(data: str) -> int:
 
 def count_zero_clicks(dial_position: int, rotation: str) -> int:
     rot: int = clicks_from_rotation(rotation)
+    # direction: R = 1 and L = -1
+    direction: int = rot // abs(rot)
     all_clicks: list[int] = [
-        (dial_position + i) % 100 for i in range(1, abs(rot) + 1, rot // abs(rot))
+        (dial_position + i) % 100 for i in range(direction, rot + direction, direction)
     ]
 
     print(f"{dial_position};{rotation}: {all_clicks}")
     number_of_zeros: int = all_clicks.count(0)
+    print(f"zeros: {number_of_zeros}")
     return number_of_zeros
 
 
