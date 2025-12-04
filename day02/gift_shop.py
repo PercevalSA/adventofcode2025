@@ -7,13 +7,22 @@ def split_data(data: str) -> list[str]:
     return data.split(",")
 
 
-def split_range(range: str):
-    return [int(id) for id in range.split("-")]
+def split_range(id_range: str):
+    splitted_range = id_range.split("-")
+    assert len(splitted_range) == 2
+    # TODO: use tuple instead of list
+    return [int(id) for id in splitted_range]
 
 
-# def iterate_on_ranges(data: list[str]):
-#     for range in data:
-#         range.split("-")
+def get_invalid_ids_from_range(id_range: str) -> list[int]:
+    invalid_ids = []
+    [start, end] = split_range(id_range)
+
+    for id in range(start, end + 1):
+        if is_id_invalid(id):
+            invalid_ids.append(id)
+
+    return invalid_ids
 
 
 def is_id_invalid(id: int) -> bool:
@@ -31,11 +40,12 @@ def is_id_invalid(id: int) -> bool:
 def part1(data: str) -> int:
     result: int = 0
     splitted_data: list[str] = split_data(data)
+    all_invalid_ids = []
 
-    for id in splitted_data:
-        if is_id_invalid(id):
-            result += 1
+    for id_range in splitted_data:
+        all_invalid_ids.extend(get_invalid_ids_from_range(id_range))
 
+    result = sum(all_invalid_ids)
     return result
 
 
