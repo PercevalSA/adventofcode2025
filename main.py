@@ -8,9 +8,15 @@ logger = logging.getLogger(__name__)
 def main():
     print("Solving puzzles from Advent of Code 2025!")
     for day_dir in sorted(Path(".").glob("day*")):
+        filename = ""
+        files = day_dir.glob("*.py")
+        for file in files:
+            if not file.stem.startswith("test_"):
+                filename = file.stem
+
         try:
             solution = __import__(
-                f"{day_dir.name}.solution", fromlist=["part1", "part2"]
+                f"{day_dir.name}.{filename}", fromlist=["part1", "part2"]
             )
             input_file = day_dir / "input.txt"
             if input_file.exists():

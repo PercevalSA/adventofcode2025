@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from solution import (
+from day01.secret_entrance import (
     clicks_from_rotation,
     count_zero_clicks,
     move_to_next_position,
