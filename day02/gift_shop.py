@@ -57,24 +57,25 @@ def has_repeated_pattern(id_str: str) -> bool:
     id_len = len(id_str)
     pattern_found = False
     for divisor in range(2, id_len + 1):
-        # we need to compare all parts
-        # for 2
-        #  == id_str[divisor:]
-
+        window_len = int(id_len / divisor)
         # store first pattern then iterate on the rest
-        pattern = id_str[0:divisor]
+        pattern = id_str[0:window_len]
+        logger.debug(f"window length: {window_len}; pattern: {pattern}")
+
         for i in range(1, divisor):
-            if pattern == id_str[i : divisor + i]:
+            logger.debug(f"checking  {id_str[i * window_len : (i + 1) * window_len]}")
+            if pattern == id_str[i * window_len : (i + 1) * window_len]:
                 pattern_found = True
             else:
                 pattern_found = False
                 break
 
-        # si on finit la boucle c'est que le pattern se répète jusqu'au bout
-        print(f"should return True: {id_str}")
+        # if we end up here, it means the pattern is repeating until the end
         if pattern_found:
+            logger.debug("pattern found!")
             break
 
+    logger.debug(f"returning {pattern_found}")
     return pattern_found
 
 
