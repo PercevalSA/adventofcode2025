@@ -2,6 +2,7 @@ from pathlib import Path
 
 from day02.gift_shop import (
     get_invalid_ids_from_range,
+    has_repeated_pattern,
     is_id_invalid,
     part1,
     split_range,
@@ -39,6 +40,20 @@ def test_get_invalid_ids_from_range():
 def test_part1():
     sample = sample_file.read_text()
     assert part1(sample) == 1227775554
+
+
+def test_has_repeated_pattern():
+    assert has_repeated_pattern("11")
+    assert has_repeated_pattern("22")
+    assert has_repeated_pattern("99")
+    assert has_repeated_pattern("1010")
+    assert has_repeated_pattern("1188511885")
+    assert has_repeated_pattern("222222")
+    assert has_repeated_pattern("446446")
+    assert has_repeated_pattern("38593859")
+    assert not has_repeated_pattern("1233")
+    assert not has_repeated_pattern("1213")
+    assert not has_repeated_pattern("57575444")
 
 
 def test_part2():

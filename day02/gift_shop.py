@@ -38,6 +38,9 @@ def is_id_invalid(id: int) -> bool:
 
 
 def part1(data: str) -> int:
+    """you can find the invalid IDs by looking for any ID which is made only of some
+    sequence of digits repeated twice
+    """
     result: int = 0
     splitted_data: list[str] = split_data(data)
     all_invalid_ids = []
@@ -49,5 +52,37 @@ def part1(data: str) -> int:
     return result
 
 
+def has_repeated_pattern(id_str: str) -> bool:
+    # we just need to divide each id by 2 then more until the id length
+    id_len = len(id_str)
+    pattern_found = False
+    for divisor in range(2, id_len + 1):
+        # we need to compare all parts
+        # for 2
+        #  == id_str[divisor:]
+
+        # store first pattern then iterate on the rest
+        pattern = id_str[0:divisor]
+        for i in range(1, divisor):
+            if pattern == id_str[i : divisor + i]:
+                pattern_found = True
+            else:
+                pattern_found = False
+                break
+
+        # si on finit la boucle c'est que le pattern se répète jusqu'au bout
+        print(f"should return True: {id_str}")
+        if pattern_found:
+            break
+
+    return pattern_found
+
+
 def part2(data: str) -> int:
+    """Now, an ID is invalid if it is made only of some sequence of digits repeated
+    at least twice
+    """
+
+    # on peut pas diviser par 2, il faut trouver le pattern de manière iterative
+
     return 0
