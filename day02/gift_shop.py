@@ -56,15 +56,25 @@ def has_repeated_pattern(id_str: str) -> bool:
     # we just need to divide each id by 2 then more until the id length
     id_len = len(id_str)
     pattern_found = False
-    for divisor in range(2, id_len + 1):
-        window_len = int(id_len / divisor)
-        # store first pattern then iterate on the rest
-        pattern = id_str[0:window_len]
-        logger.debug(f"window length: {window_len}; pattern: {pattern}")
 
-        for i in range(1, divisor):
-            logger.debug(f"checking  {id_str[i * window_len : (i + 1) * window_len]}")
-            if pattern == id_str[i * window_len : (i + 1) * window_len]:
+    for divisor in range(2, id_len + 1):
+        # check if divisor is conform according to Eratosthenes
+        if id_len % divisor != 0:
+            logger.debug("ignoring divisor {divisor}")
+            continue
+
+        window_len = int(id_len / divisor)
+        pattern = id_str[0:window_len]  # store first pattern then iterate on the rest
+        logger.debug(
+            f"divisor: {divisor}; window length: {window_len}; pattern: {pattern}"
+        )
+
+        for i in range(0, divisor):
+            slice_content = id_str[i * window_len : (i + 1) * window_len]
+            logger.debug(
+                f"checking ({i * window_len}:{(i + 1) * window_len}) {slice_content}"
+            )
+            if pattern == slice_content:
                 pattern_found = True
             else:
                 pattern_found = False
@@ -79,11 +89,27 @@ def has_repeated_pattern(id_str: str) -> bool:
     return pattern_found
 
 
+def get_invalid_ids_from_range_2(id_range: str) -> list[int]:
+    invalid_ids = []
+    [start, end] = split_range(id_range)
+
+    for id in range(start, end + 1):
+        if has_repeated_pattern(str(id)):
+            invalid_ids.append(int(id))
+
+    return invalid_ids
+
+
 def part2(data: str) -> int:
     """Now, an ID is invalid if it is made only of some sequence of digits repeated
     at least twice
     """
+    result: int = 0
+    splitted_data: list[str] = split_data(data)
+    all_invalid_ids = []
 
-    # on peut pas diviser par 2, il faut trouver le pattern de manière iterative
+    for id_range in splitted_data:
+        all_invalid_ids.extend(get_invalid_ids_from_range_2(id_range))
 
-    return 0
+    result = sum(all_invalid_ids)
+    return result
