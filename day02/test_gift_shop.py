@@ -6,6 +6,7 @@ from day02.gift_shop import (
     has_repeated_pattern,
     is_id_invalid,
     part1,
+    part2,
     split_range,
 )
 
@@ -65,9 +66,12 @@ def test_get_invalid_ids_from_range_2():
     assert get_invalid_ids_from_range_2("11-22") == [11, 22]
     assert get_invalid_ids_from_range_2("95-115") == [99, 111]
     assert get_invalid_ids_from_range_2("998-1012") == [999, 1010]
+    assert get_invalid_ids_from_range_2("1188511880-1188511890") == [1188511885]
+    assert get_invalid_ids_from_range_2("1698522-1698528") == []
     assert get_invalid_ids_from_range_2("2121212118-2121212124") == [2121212121]
+    assert get_invalid_ids_from_range_2("824824821-824824827") == [824824824]
 
 
 def test_part2():
     sample = sample_file.read_text()
-    assert part1(sample) == 4174379265
+    assert part2(sample) == 4174379265

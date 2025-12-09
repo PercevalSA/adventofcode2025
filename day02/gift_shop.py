@@ -104,12 +104,11 @@ def part2(data: str) -> int:
     """Now, an ID is invalid if it is made only of some sequence of digits repeated
     at least twice
     """
-    result: int = 0
     splitted_data: list[str] = split_data(data)
     all_invalid_ids = []
 
     for id_range in splitted_data:
         all_invalid_ids.extend(get_invalid_ids_from_range_2(id_range))
+        logger.debug(f"all invalid IDs: {all_invalid_ids}")
 
-    result = sum(all_invalid_ids)
-    return result
+    return sum(all_invalid_ids)
