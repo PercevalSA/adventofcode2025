@@ -39,6 +39,21 @@ def search_higher_joltage(batteries: list[int]) -> int:
     return first * 10 + second
 
 
+def search_higher_joltage_12(batteries: list[int]) -> int:
+    candidates = batteries[:-12]
+    logger.debug(f"candidate: {candidates}")
+
+    first_index = max(range(len(candidates)), key=candidates.__getitem__)
+    first = candidates[first_index]
+    logger.debug(f"first: {first}")
+
+    # chiffres_restant = 12
+    # on cherche pour chaque fenêtre entre le dernier item trouvé et 12 - le nombre d'item trouvés
+    # puis on met à jour la fenêtre jusqu'à qu'il ne reste plus d'item.
+    # si le nombre d'item restant + le nombre d'items restant = 12 alors on a finit
+    return first
+
+
 def part1(data: str) -> int:
     return sum(search_higher_joltage(line) for line in split_data(data))
 

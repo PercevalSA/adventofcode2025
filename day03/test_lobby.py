@@ -23,5 +23,14 @@ def test_max_joltage():
     assert search_higher_joltage(input_data[3]) == 92
 
 
+def test_max_joltage_12():
+    input_data = split_data(sample_file.read_text())
+
+    # assert search_higher_joltage_12(input_data[0]) == 987654321111
+    # assert search_higher_joltage_12(input_data[1]) == 811111111119
+    # assert search_higher_joltage_12(input_data[2]) == 434234234278
+    # assert search_higher_joltage_12(input_data[3]) == 888911112111
+
+
 def test_part1():
     assert part1(sample_file.read_text()) == 357
