@@ -4,40 +4,44 @@ logger = logging.getLogger(__name__)
 
 
 def split_data(data: str) -> list[list[int]]:
-    return [list(map(int, list(line))) for line in data.splitlines()]
+    """Convert input text into a list of integer lists."""
+    return [[int(ch) for ch in line] for line in data.splitlines()]
 
 
-def search_higher_joltage(batteries_list: list[int]) -> int:
-    max_joltage = 0
+def search_higher_joltage(batteries: list[int]) -> int:
+    """Return an integer composed of the highest battery (from the prefix)
+    followed by the highest battery that appears after it.
 
-    # searching for first
-    bigger_battery_joltage = 0
-    bigger_battery_index = 0
-    for index, battery_joltage in enumerate(batteries_list[0:-1]):
-        if battery_joltage > bigger_battery_joltage:
-            bigger_battery_index = index
-            bigger_battery_joltage = battery_joltage
+    The result is `first * 10 + second`. We search the first battery without the last item
+    """
+    # consider all candidates for the first value except the last element
+    candidates = batteries[:-1]
 
-    max_joltage = bigger_battery_joltage
+    # index of the first maximum in candidates
+    #
+    # __getitem__() is a special method (also known as a dunder or magic method) in Python
+    # that allows us to access an element from an object using square brackets,
+    # similar to how we access items in a list, tuple, or dictionary.
+    # retourne l'index de l'élément max de la liste, car la fonction de comparaison est
+    # __getitem__ qui retourne l'item donné à l'index. Les index sont générés grâce à range
+    first_index = max(range(len(candidates)), key=candidates.__getitem__)
+    first = candidates[first_index]
 
-    # searching second
-    bigger_battery_joltage = 0
+    # find the maximum after the first_index (may be empty)
+    rest = batteries[first_index + 1 :]
 
-    for battery_joltage in batteries_list[bigger_battery_index + 1 :]:
-        if battery_joltage > bigger_battery_joltage:
-            bigger_battery_joltage = battery_joltage
+    if not rest:
+        logger.error(f"empty battery second part: {candidates}")
 
-    max_joltage = max_joltage * 10 + bigger_battery_joltage
+    second = max(rest)
 
-    return max_joltage
+    logger.debug("first=%s at %s, second=%s", first, first_index, second)
+    return first * 10 + second
 
 
 def part1(data: str) -> int:
-    joltage = 0
-    for line in split_data(data):
-        joltage += search_higher_joltage(line)
-    return joltage
+    return sum(search_higher_joltage(line) for line in split_data(data))
 
 
-def part2(data: str) -> int:
+def part2(_data: str) -> int:
     return 0
