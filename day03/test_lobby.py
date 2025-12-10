@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from day03.lobby import part1, split_data
+from day03.lobby import part1, search_higher_joltage, split_data
 
 sample_file: Path = Path(__file__).parent / "test_input.txt"
 
@@ -12,6 +12,15 @@ def test_split_data():
         [2, 3, 4, 2, 3, 4, 2, 3, 4, 2, 3, 4, 2, 7, 8],
         [8, 1, 8, 1, 8, 1, 9, 1, 1, 1, 1, 2, 1, 1, 1],
     ]
+
+
+def test_max_joltage():
+    input_data = split_data(sample_file.read_text())
+
+    assert search_higher_joltage(input_data[0]) == 98
+    assert search_higher_joltage(input_data[1]) == 89
+    assert search_higher_joltage(input_data[2]) == 78
+    assert search_higher_joltage(input_data[3]) == 92
 
 
 def test_part1():
