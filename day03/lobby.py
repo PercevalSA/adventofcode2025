@@ -33,7 +33,10 @@ def search_higher_joltage(batteries_list: list[int]) -> int:
 
 
 def part1(data: str) -> int:
-    return 0
+    joltage = 0
+    for line in split_data(data):
+        joltage += search_higher_joltage(line)
+    return joltage
 
 
 def part2(data: str) -> int:

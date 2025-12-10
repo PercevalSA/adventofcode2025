@@ -24,4 +24,4 @@ def test_max_joltage():
 
 
 def test_part1():
-    assert part1(sample_file.read_text()) == 0
+    assert part1(sample_file.read_text()) == 357
