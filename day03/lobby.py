@@ -2,8 +2,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def split_data(data: str) -> list[str]:
-     
+
+def split_data(data: str) -> list[list[int]]:
+    return [list(map(int, list(line))) for line in data.splitlines()]
+
 
 def part1(data: str) -> int:
     return 0
