@@ -66,9 +66,18 @@ def search_higher_joltage_12(batteries: list[int]) -> int:
         # candidates are available batteries: because we need to build a 12 items number
         # we reserve 11 remaining (minus 1 each iteration) so we do not consider the last item
         # after the 4th round
-        candidates = batteries[
-            next_bat_global_index : len(batteries) - (12 - 1 - selected_batteries)
-        ]
+
+        # we reserve last items so they are not considered as candidates because we need
+        # to build a 12 long number
+        reserved = 11 - next_bat_global_index
+
+        # len_candidates =
+        # len(batteries) - next_bat_global_index - len_candidates
+
+        reserved_list = batteries[len(batteries) - reserved :]
+        logger.debug(f"reserved: {reserved}; {reserved_list}")
+
+        candidates = batteries[next_bat_global_index : len(batteries) - reserved]
         logger.debug(f"candidates: {candidates}")
 
         next_bat_index = max(range(0, len(candidates)), key=candidates.__getitem__)
