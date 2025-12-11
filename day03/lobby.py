@@ -40,18 +40,45 @@ def search_higher_joltage(batteries: list[int]) -> int:
 
 
 def search_higher_joltage_12(batteries: list[int]) -> int:
-    candidates = batteries[:-12]
-    logger.debug(f"candidate: {candidates}")
+    """cherche le plus grand joltage avec 12 chiffres
+    cherche pour chaque fenêtre candidates entre l'index du dernier item trouvé et
+    les item restants (12 - le nombre d'item trouvés).
+    Puis met à jour la fenêtre jusqu'à qu'il ne reste plus d'items à selectionner
+    si le nombre d'item selectionnés + le nombre d'items restant = 12 alors on a finit
 
-    first_index = max(range(len(candidates)), key=candidates.__getitem__)
-    first = candidates[first_index]
-    logger.debug(f"first: {first}")
+    Args:
+        batteries (list[int]): liste des batteries
 
-    # chiffres_restant = 12
-    # on cherche pour chaque fenêtre entre le dernier item trouvé et 12 - le nombre d'item trouvés
-    # puis on met à jour la fenêtre jusqu'à qu'il ne reste plus d'item.
-    # si le nombre d'item restant + le nombre d'items restant = 12 alors on a finit
-    return first
+    Returns:
+        int: le joltage resultant des 12 batteries sélectionnées
+    """
+    candidates = batteries
+    batteries_joltage = 0
+    selected_batteries = 0
+    next_bat_index = 0
+
+    while not candidates:
+        remaining_batteries = len(batteries) - next_bat_index
+        logger.debug(f"remaining batteries: {remaining_batteries}")
+
+        if remaining_batteries + selected_batteries == 12:
+            batteries_joltage = batteries_joltage * pow(10, remaining_batteries) + int(
+                "".join(map(str, candidates))
+            )
+            logger.info(f"found all batteries: {batteries_joltage}")
+            return batteries_joltage
+
+        candidates = candidates[next_bat_index : remaining_batteries - 12]
+        logger.debug(f"candidate: {candidates}")
+
+        next_bat_index = max(range(0, len(candidates)), key=candidates.__getitem__)
+        batteries_joltage = batteries_joltage * 10 + candidates[next_bat_index]
+        selected_batteries += 1
+        logger.debug(
+            f"next index:  {next_bat_index}; battery joltage: {batteries_joltage}"
+        )
+
+    return batteries_joltage
 
 
 def part1(data: str) -> int:

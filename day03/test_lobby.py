@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from day03.lobby import part1, search_higher_joltage, split_data
+from day03.lobby import (
+    part1,
+    search_higher_joltage,
+    search_higher_joltage_12,
+    split_data,
+)
 
 sample_file: Path = Path(__file__).parent / "test_input.txt"
 
@@ -26,10 +31,10 @@ def test_max_joltage():
 def test_max_joltage_12():
     input_data = split_data(sample_file.read_text())
 
-    # assert search_higher_joltage_12(input_data[0]) == 987654321111
-    # assert search_higher_joltage_12(input_data[1]) == 811111111119
-    # assert search_higher_joltage_12(input_data[2]) == 434234234278
-    # assert search_higher_joltage_12(input_data[3]) == 888911112111
+    assert search_higher_joltage_12(input_data[0]) == 987654321111
+    assert search_higher_joltage_12(input_data[1]) == 811111111119
+    assert search_higher_joltage_12(input_data[2]) == 434234234278
+    assert search_higher_joltage_12(input_data[3]) == 888911112111
 
 
 def test_part1():
