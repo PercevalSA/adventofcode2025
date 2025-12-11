@@ -52,32 +52,36 @@ def search_higher_joltage_12(batteries: list[int]) -> int:
     Returns:
         int: le joltage resultant des 12 batteries sélectionnées
     """
-    candidates = batteries
-    batteries_joltage = 0
     selected_batteries = 0
-    next_bat_index = 0
+    next_bat_index = -1
+    next_bat_global_index = 0
+    batteries_joltage = 0
 
-    while not candidates:
-        remaining_batteries = len(batteries) - next_bat_index
-        logger.debug(f"remaining batteries: {remaining_batteries}")
+    # we could finish the loop earlier by checking the number of remaining batteries and
+    # with that calculation batteries_joltage = batteries_joltage * 10 + int("".join(map(str, candidates)))
 
-        if remaining_batteries + selected_batteries == 12:
-            batteries_joltage = batteries_joltage * pow(10, remaining_batteries) + int(
-                "".join(map(str, candidates))
-            )
-            logger.info(f"found all batteries: {batteries_joltage}")
-            return batteries_joltage
+    while selected_batteries < 12:
+        logger.debug(f"selected batteries: {selected_batteries}")
 
-        candidates = candidates[next_bat_index : remaining_batteries - 12]
-        logger.debug(f"candidate: {candidates}")
+        # candidates are available batteries: because we need to build a 12 items number
+        # we reserve 11 remaining (minus 1 each iteration) so we do not consider the last item
+        # after the 4th round
+        candidates = batteries[
+            next_bat_global_index : len(batteries) - (12 - 1 - selected_batteries)
+        ]
+        logger.debug(f"candidates: {candidates}")
 
         next_bat_index = max(range(0, len(candidates)), key=candidates.__getitem__)
         batteries_joltage = batteries_joltage * 10 + candidates[next_bat_index]
         selected_batteries += 1
+        next_bat_global_index = selected_batteries + next_bat_index
+
+        logger.debug(f"battery joltage: {batteries_joltage}")
         logger.debug(
-            f"next index:  {next_bat_index}; battery joltage: {batteries_joltage}"
+            f"next index: {next_bat_index}; global index: {next_bat_global_index}"
         )
 
+    logger.info(f"found all batteries: {batteries_joltage}")
     return batteries_joltage
 
 
