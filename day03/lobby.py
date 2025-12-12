@@ -84,15 +84,16 @@ def search_higher_joltage_12(batteries: list[int]) -> int:
         )
 
         next_bat_index = max(range(0, len(candidates)), key=candidates.__getitem__)
-        logger.debug(
-            f"next index: {next_bat_index}; global index: {next_bat_global_index}"
-        )
+        # compute the selected item's global index within `batteries`
+        global_index = next_bat_global_index + next_bat_index
+        logger.debug(f"next index: {next_bat_index}; global index: {global_index}")
 
-        batteries_joltage = batteries_joltage * 10 + candidates[next_bat_index]
-        logger.debug(f"battery joltage: {batteries_joltage}")
+        batteries_joltage = batteries_joltage * 10 + batteries[global_index]
+        logger.debug("battery joltage: {batteries_joltage}")
 
         selected_batteries += 1
-        next_bat_global_index = selected_batteries + next_bat_index
+        # next search must start after the selected element
+        next_bat_global_index = global_index + 1
 
     logger.info(f"found all batteries: {batteries_joltage}")
     return batteries_joltage
