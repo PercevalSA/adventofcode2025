@@ -56,7 +56,7 @@ def search_higher_joltage_12(batteries: list[int]) -> int:
     next_bat_index = -1
     next_bat_global_index = 0
     batteries_joltage = 0
-    logger.info(f"searching in {batteries}")
+    logger.debug(f"searching in {batteries}")
 
     # we could finish the loop earlier by checking the number of remaining batteries and
     # with that calculation batteries_joltage = batteries_joltage * 10 + int("".join(map(str, candidates)))
@@ -95,7 +95,7 @@ def search_higher_joltage_12(batteries: list[int]) -> int:
         # next search must start after the selected element
         next_bat_global_index = global_index + 1
 
-    logger.info(f"found all batteries: {batteries_joltage}")
+    logger.debug(f"found all batteries: {batteries_joltage}")
     return batteries_joltage
 
 
@@ -103,5 +103,5 @@ def part1(data: str) -> int:
     return sum(search_higher_joltage(line) for line in split_data(data))
 
 
-def part2(_data: str) -> int:
-    return 0
+def part2(data: str) -> int:
+    return sum(search_higher_joltage_12(line) for line in split_data(data))
